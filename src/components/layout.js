@@ -9,15 +9,19 @@ import Typography from "@material-ui/core/Typography"
 import Divider from "@material-ui/core/Divider"
 import Collapse from "@material-ui/core/Collapse"
 import IconButton from "@material-ui/core/IconButton"
-import MenuIcon from "@material-ui/icons/Menu"
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft"
-import ChevronRightIcon from "@material-ui/icons/ChevronRight"
 import ListItem from "@material-ui/core/ListItem"
 import ListItemIcon from "@material-ui/core/ListItemIcon"
 import ListItemText from "@material-ui/core/ListItemText"
-import InboxIcon from "@material-ui/icons/MoveToInbox"
-import MailIcon from "@material-ui/icons/Mail"
 import { Link } from "gatsby-theme-material-ui"
+import MenuIcon from "@material-ui/icons/Menu"
+import PinDropIcon from "@material-ui/icons/PinDrop"
+import AttachMoneyIcon from "@material-ui/icons/AttachMoney"
+import ExploreIcon from "@material-ui/icons/Explore"
+import HouseIcon from "@material-ui/icons/House"
+import LocationCityIcon from "@material-ui/icons/LocationCity"
+import CategoryIcon from "@material-ui/icons/Category"
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft"
+import ChevronRightIcon from "@material-ui/icons/ChevronRight"
 
 const drawerWidth = 240
 
@@ -160,7 +164,7 @@ export default function Layout({ title, children }) {
         <List>
           <ListItem button onClick={handleSubList(lands)}>
             <ListItemIcon>
-              <InboxIcon />
+              <PinDropIcon />
             </ListItemIcon>
             <ListItemText primary="Lotes y Terrenos" />
           </ListItem>
@@ -169,30 +173,41 @@ export default function Layout({ title, children }) {
               <Link to="/lots-lands/sales">
                 <ListItem button className={classes.nested}>
                   <ListItemIcon>
-                    <MailIcon />
+                    <AttachMoneyIcon />
                   </ListItemIcon>
                   <ListItemText primary="Ventas" />
                 </ListItem>
               </Link>
               <ListItem button className={classes.nested}>
                 <ListItemIcon>
-                  <MailIcon />
+                  <ExploreIcon />
                 </ListItemIcon>
                 <ListItemText primary="Proyectos" />
               </ListItem>
             </List>
           </Collapse>
-        </List>
-        <Divider />
-        <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          <Divider />
+
+          <ListItem button>
+            <ListItemIcon>
+              <HouseIcon />
+            </ListItemIcon>
+            <ListItemText primary="Casas" />
+          </ListItem>
+
+          <ListItem button>
+            <ListItemIcon>
+              <LocationCityIcon />
+            </ListItemIcon>
+            <ListItemText primary="Alquileres" />
+          </ListItem>
+
+          <ListItem button>
+            <ListItemIcon>
+              <CategoryIcon />
+            </ListItemIcon>
+            <ListItemText primary="Proyectos Particulares" />
+          </ListItem>
         </List>
       </Drawer>
       <main className={classes.content}>
