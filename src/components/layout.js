@@ -7,6 +7,7 @@ import Toolbar from "@material-ui/core/Toolbar"
 import List from "@material-ui/core/List"
 import Typography from "@material-ui/core/Typography"
 import Divider from "@material-ui/core/Divider"
+import Collapse from "@material-ui/core/Collapse"
 import IconButton from "@material-ui/core/IconButton"
 import MenuIcon from "@material-ui/icons/Menu"
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft"
@@ -16,6 +17,7 @@ import ListItemIcon from "@material-ui/core/ListItemIcon"
 import ListItemText from "@material-ui/core/ListItemText"
 import InboxIcon from "@material-ui/icons/MoveToInbox"
 import MailIcon from "@material-ui/icons/Mail"
+import { Link } from "gatsby-theme-material-ui"
 
 const drawerWidth = 240
 
@@ -70,6 +72,9 @@ const useStyles = makeStyles(theme => ({
       width: theme.spacing(9) + 1,
     },
   },
+  nested: {
+    paddingLeft: theme.spacing(4),
+  },
   toolbar: {
     display: "flex",
     alignItems: "center",
@@ -84,10 +89,16 @@ const useStyles = makeStyles(theme => ({
   },
 }))
 
-export default function Layout({ children }) {
+export default function Layout({ title, children }) {
   const classes = useStyles()
   const theme = useTheme()
   const [open, setOpen] = React.useState(false)
+  const [lands, housing, rents, proyects] = [1, 2, 3, 4]
+  const [subList, setSubList] = React.useState(null)
+  const handleSubList = subList => () => {
+    if (!open) setOpen(true)
+    setSubList(prevSubList => (prevSubList === subList ? null : subList))
+  }
 
   const handleDrawerOpen = () => {
     setOpen(true)
@@ -95,6 +106,7 @@ export default function Layout({ children }) {
 
   const handleDrawerClose = () => {
     setOpen(false)
+    setSubList(null)
   }
 
   return (
@@ -118,7 +130,7 @@ export default function Layout({ children }) {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" noWrap>
-            Mini variant drawer
+            {title}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -146,14 +158,30 @@ export default function Layout({ children }) {
         </div>
         <Divider />
         <List>
-          {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          <ListItem button onClick={handleSubList(lands)}>
+            <ListItemIcon>
+              <InboxIcon />
+            </ListItemIcon>
+            <ListItemText primary="Lotes y Terrenos" />
+          </ListItem>
+          <Collapse in={subList === lands} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <Link to="/lots-lands/sales">
+                <ListItem button className={classes.nested}>
+                  <ListItemIcon>
+                    <MailIcon />
+                  </ListItemIcon>
+                  <ListItemText primary="Ventas" />
+                </ListItem>
+              </Link>
+              <ListItem button className={classes.nested}>
+                <ListItemIcon>
+                  <MailIcon />
+                </ListItemIcon>
+                <ListItemText primary="Proyectos" />
+              </ListItem>
+            </List>
+          </Collapse>
         </List>
         <Divider />
         <List>
